@@ -3,12 +3,6 @@ default: &default
   encoding: utf8
   reconnect: false
 
-default: &default
-  pool: 5
-#  username: root
-#  password:
-  host: localhost
-
 development:
   <<: *default
   database: turtle_bay

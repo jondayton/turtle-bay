@@ -1,0 +1,39 @@
+<nav class="navbar bg-faded">
+  <a class="navbar-brand" href="#">Turtle Bay Events</a>
+</nav>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Date</th>
+      <th>Event</th>
+      <th>From</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr class="<%= 'table-success' if event[:favorite] %>">
+        <td>
+          <img class="event-image" src="<%= event[:image] if event[:image] %>" />
+        </td>
+        <td>
+          <%= event[:start].strftime('%m-%d %l:%M%P') %>
+        </td>
+        <td>
+          <a href="<%= event[:url] %>" target="_blank">
+            <%= event[:name] %>
+          </a>
+        </td>
+        <td>
+          <%= event[:organization] %>
+        </td>
+        <td>
+          <%= event[:description][0...350] if event[:description] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
