@@ -25,9 +25,4 @@ class Ovationtix < ApiRequests
     "https://api.ovationtix.com/public/series/client(#{@settings[:client_id]})"
   end
 
-  def epoch_string_to_date(string)
-    date = string.to_i/1000
-    DateTime.strptime(date.to_s, '%s')
-
-  end
 end
