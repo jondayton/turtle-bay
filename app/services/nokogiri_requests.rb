@@ -9,12 +9,9 @@ class NokogiriRequests
   end
 
   def query_events(opts={})
-    Rails.cache.fetch("#{@organization}4", expires_in: 24.hours) do
+    Rails.cache.fetch("#{@organization}", expires_in: 24.hours) do
 
-      docs = urls.map do |url|
-        doc = Nokogiri::HTML(open(url))
-      end
-
+      docs = pages_html(urls)
       serialized = serialize(docs)
 
       serialized.map do |event|
@@ -25,4 +22,20 @@ class NokogiriRequests
     end
   end
 
+  def pages_html(urls)
+    urls.map do |url|
+      doc = Nokogiri::HTML(open(encoded_url(url)))
+      { doc: doc, url: url }
+    end
+  end
+
+  def encoded_url(url)
+    URI.encode(URI.decode(url))
+  end
+
+  def serialize(html_objects)
+    html_objects.map do |obj|
+      serialize_each(obj[:doc], obj[:url])
+    end
+  end
 end

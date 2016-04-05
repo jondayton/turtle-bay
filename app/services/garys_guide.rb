@@ -1,6 +1,6 @@
 class GarysGuide < NokogiriRequests
   def serialize(docs)
-    sections = docs[0].css('.boxx_none .fbox>div>table>tr')
+    sections = docs[0][:doc].css('.boxx_none .fbox>div>table>tr')
 
     events = sections.map do |event|
       text = event.children[0] && event.children[0].children[0] && event.children[0].children[0].content

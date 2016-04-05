@@ -1,15 +1,36 @@
 class EventsController < ApplicationController
   def index
-    @events = cooper_hewitt_events + nearby_events + irish_rep_events + gramercy_theatre_events + drom_events + meetup_events + instituto_events + garys_guide_events
+    @events = [
+      cooper_hewitt_events,
+      nearby_events,
+      irish_rep_events,
+      gramercy_theatre_events,
+      drom_events,
+      meetup_events,
+      instituto_events,
+      garys_guide_events,
+      iq2_events
+    ]
+
+    @events.flatten!
 
     #It's a favorite or a weekend event or a late event
     @events.select! do |event|
-      event[:favorite] || event[:start].wday % 6 === 0 || event[:start].hour >= 19
+      current = event[:start] > Time.now - 6.hours
+      favorite = event[:favorite]
+      weekend = event[:start].wday % 6 === 0
+      late = event[:start].hour >= 19
+      current && (favorite || weekend || late)
     end
     @events.sort! { |a, b| a[:start] <=> b[:start] }
   end
 
   private
+
+  def iq2_events
+    iq2 = IQ2.new('Intelligence Squared', { favorite: true })
+    iq2.query_events()
+  end
 
   def meetup_events
     meetup = Meetup.new('Meetup')

@@ -30,7 +30,7 @@
           <%= event[:organization] %>
         </td>
         <td>
-          <%= event[:description][0...350] if event[:description] %>
+          <%= strip_tags(event[:description][0...350]) if event[:description] %>
         </td>
       </tr>
     <% end %>
