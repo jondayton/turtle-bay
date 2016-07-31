@@ -1,27 +1,19 @@
 class LiveNation < ApiRequests
 
-  def serialize(data)
+  def serialize(response)
+    data = JSON.parse(response)['result']
     data.map do |event|
       {
-        id: event['EventId'],
-        name: event['Artists'],
-        start: DateTime.strptime(event['EventDate'], '%Y-%m-%dT%H'),
+        id: event['eventId'],
+        name: event['artists'],
+        start: DateTime.strptime(event['eventDate'], '%Y-%m-%dT%H'),
         url: event['BuyTicketUrl'],
-        image: event['EventImageUrl']
+        image: event['eventImageLocation']
       }
     end
   end
 
   def url
-    "http://venue.thegramercytheatre.com/api/TapEvent/GetEventCalendar"
-  end
-
-  def default_opts
-    {
-      departmentId: 8,
-      numberOfEvents: 20,
-      eventId: nil,
-      offerId: 0
-    }
+    "http://venue.thegramercytheatre.com/api/EventCalendar/GetEvents"
   end
 end

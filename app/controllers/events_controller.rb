@@ -48,8 +48,19 @@ class EventsController < ApplicationController
   end
 
   def gramercy_theatre_events
+    now = DateTime.now
+    three_months = now + 8.weeks
     gramercy_theatre = LiveNation.new('Gramercy Theater')
-    gramercy_theatre.query_events({ venueIds: 107 })
+    gramercy_theatre.query_events({
+      startDate: now.strftime("%m/%d/%Y"),
+      endDate: three_months.strftime("%m/%d/%Y"),
+      venueIds: 107,
+      limit: 200,
+      offset: 1,
+      genre: nil,
+      artist: nil,
+      offerType: nil
+    })
   end
 
   def irish_rep_events

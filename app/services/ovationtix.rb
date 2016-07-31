@@ -1,6 +1,7 @@
 class Ovationtix < ApiRequests
 
-  def serialize(data)
+  def serialize(response)
+    data = JSON.parse(response.body)
     events = []
     data['seriesInformation'].each do |series|
       events << {

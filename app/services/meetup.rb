@@ -1,6 +1,7 @@
 class Meetup < ApiRequests
 
-  def serialize(data)
+  def serialize(response)
+    data = JSON.parse(response.body)
     data['results'].map do |event|
       { id: event['id'],
         name: event['name'],

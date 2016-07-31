@@ -1,6 +1,7 @@
 class Eventbrite < ApiRequests
 
-  def serialize(data)
+  def serialize(response)
+    data = JSON.parse(response.body)
     data['events'].map do |event|
       { id: event['id'],
         name: event['name']['text'],
