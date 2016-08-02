@@ -23,6 +23,11 @@ class EventsController < ApplicationController
       current && (favorite || weekend || late)
     end
     @events.sort! { |a, b| a[:start] <=> b[:start] }
+
+    respond_to do |format|
+      format.json { render json: @events }
+      format.html
+    end
   end
 
   private
