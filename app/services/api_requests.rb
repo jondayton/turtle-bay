@@ -6,18 +6,17 @@ class ApiRequests
   end
 
   def query_events(opts={})
-    Rails.cache.fetch("#{@organization}", expires_in: 24.hours) do
-      query_opts = { query: default_opts.merge(opts) }
+    query_opts = { query: default_opts.merge(opts) }
 
-      response = HTTParty.get(url, query_opts)
-      serialized = serialize(response)
+    response = HTTParty.get(url, query_opts)
+    serialized = serialize(response)
 
-      serialized.map do |event|
-        event[:organization] ||= @organization
-        event[:favorite] = @settings[:favorite]
-        event
-      end
+    serialized.map do |event|
+      event[:organization] ||= @organization
+      event[:favorite] = @settings[:favorite]
+      event
     end
+
 
   end
 

@@ -3,10 +3,10 @@ class EventsController < ApplicationController
     @events = [
       cooper_hewitt_events,
       nearby_events,
-      irish_rep_events,
-      gramercy_theatre_events,
-      drom_events,
-      meetup_events,
+      # irish_rep_events,
+      # gramercy_theatre_events,
+      # drom_events,
+      # meetup_events,
       instituto_events,
       garys_guide_events,
       iq2_events
